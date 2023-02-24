@@ -1,4 +1,6 @@
-# .Net/CSharp EditorConfig configuration file that is used to define and maintain consistent code styles between team members working on the same code as well as between different editors and IDEs that they might use.
+## .Net/CSharp EditorConfig configuration file
+
+Used to define and maintain consistent code styles between team members working on the same code as well as between different editors and IDEs that they might use.
 
 ### .NET-coding-convention EditorCofnig properties:
 
