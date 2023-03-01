@@ -1,0 +1,10 @@
+@model IEnumerable<Header>
+
+<div class="esh-header">
+    <div class="container">
+        @foreach (Header header in Model)
+        {
+            <a class="esh-header-back" asp-area="" asp-controller="@header.Controller" asp-action="Index">@header.Text</a>
+        }
+    </div>
+</div>

@@ -1,0 +1,131 @@
+<div class="container">
+    <h1 class="mb-4 mt-5">[ Checkout ]</h1>
+    <div [hidden]="!errorReceived" class="alert" role="alert">
+        Not possible to create a new order, please try later on
+    </div>
+    <form (ngSubmit)="submitForm(newOrderForm.value)" [formGroup]="newOrderForm">
+        <section class="u-background-brightest p-5">
+            <h2 class="mb-4">Shipping Address</h2>
+            <div class="row">
+                <div class="col-6">
+                    <div [ngClass]="{'has-error':!newOrderForm.controls['street'].valid && newOrderForm.controls['street'].touched}"
+                         class="form-group">
+                        <label>Address</label>
+                        <input [formControl]="newOrderForm.controls['street']" class="form-control form-input w-100 u-maxwidth-unset" placeholder="Street"
+                               type="text">
+                        <div *ngIf="newOrderForm.controls['street'].hasError('required') && newOrderForm.controls['street'].touched"
+                             class="alert alert-danger">Required field.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div [ngClass]="{'has-error':!newOrderForm.controls['city'].valid && newOrderForm.controls['city'].touched}"
+                         class="form-group">
+                        <label>City</label>
+                        <input [formControl]="newOrderForm.controls['city']" class="form-control form-input w-100 u-maxwidth-unset" placeholder="City"
+                               type="text">
+                        <div *ngIf="newOrderForm.controls['city'].hasError('required') && newOrderForm.controls['city'].touched"
+                             class="alert alert-danger">Required field.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div [ngClass]="{'has-error':!newOrderForm.controls['state'].valid && newOrderForm.controls['state'].touched}"
+                         class="form-group">
+                        <label>State</label>
+                        <input [formControl]="newOrderForm.controls['state']" class="form-control form-input w-100 u-maxwidth-unset" placeholder="state"
+                               type="text">
+                        <div *ngIf="newOrderForm.controls['state'].hasError('required') && newOrderForm.controls['state'].touched"
+                             class="alert alert-danger">Required field.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div [ngClass]="{'has-error':!newOrderForm.controls['country'].valid && newOrderForm.controls['country'].touched}"
+                         class="form-group">
+                        <label>Country</label>
+                        <input [formControl]="newOrderForm.controls['country']" class="form-control form-input w-100 u-maxwidth-unset" placeholder="country"
+                               type="text">
+                        <div *ngIf="newOrderForm.controls['country'].hasError('required') && newOrderForm.controls['country'].touched"
+                             class="alert alert-danger">Required field.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h2 class="mt-5 mb-4">Payment method</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div [ngClass]="{'has-error':!newOrderForm.controls['cardnumber'].valid && newOrderForm.controls['cardnumber'].touched}"
+                         class="form-group">
+                        <label>Card number</label>
+                        <input [formControl]="newOrderForm.controls['cardnumber']" class="form-control form-input w-100 u-maxwidth-unset" placeholder="000000000000000"
+                               type="text">
+                        <div *ngIf="newOrderForm.controls['cardnumber'].hasError('required') && newOrderForm.controls['cardnumber'].touched"
+                             class="alert alert-danger">Required field.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div [ngClass]="{'has-error':!newOrderForm.controls['cardholdername'].valid && newOrderForm.controls['cardholdername'].touched}"
+                         class="form-group">
+                        <label>Cardholder name</label>
+                        <input [formControl]="newOrderForm.controls['cardholdername']" class="form-control form-input w-100 u-maxwidth-unset" placeholder="Card holder"
+                               type="text">
+                        <div *ngIf="newOrderForm.controls['cardholdername'].hasError('required') && newOrderForm.controls['cardholdername'].touched"
+                             class="alert alert-danger">Required field.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div [ngClass]="{'has-error':!newOrderForm.controls['expirationdate'].valid && newOrderForm.controls['expirationdate'].touched}"
+                         class="form-group">
+                        <label>Expiration date</label>
+                        <input [formControl]="newOrderForm.controls['expirationdate']" class="form-control form-input w-50 u-maxwidth-unset" placeholder="MM/YY"
+                               type="text">
+                        <div *ngIf="newOrderForm.controls['expirationdate'].hasError('required') && newOrderForm.controls['expirationdate'].touched"
+                             class="alert alert-danger">Required field.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div [ngClass]="{'has-error':!newOrderForm.controls['securitycode'].valid && newOrderForm.controls['securitycode'].touched}"
+                         class="form-group">
+                        <label class="esh-orders_new-title">Security code</label>
+                        <input [formControl]="newOrderForm.controls['securitycode']" class="form-control form-input w-50 u-maxwidth-unset" placeholder="000"
+                               type="text">
+                        <div *ngIf="newOrderForm.controls['securitycode'].hasError('required') && newOrderForm.controls['securitycode'].touched"
+                             class="alert alert-danger">Required field.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="mt-5 mb-4">Order details</h2>
+            <article *ngFor="let item of order.orderItems"
+                     class="divider divider--bottom d-flex align-items-center pb-3 mt-3 u-text-sm">
+                <div class="esh-orders_new-thumbnail-container">
+                    <div class="esh-orders_new-thumbnail-wrapper">
+                        <img class="esh-orders_new-thumbnail" src="{{item.pictureurl}}">
+                    </div>
+                </div>
+                <div class="row w-100 ml-3">
+                    <div class="col-6">{{item.productname}}</div>
+                    <div class="col-2">$ {{item.unitprice | number:'.2-2'}}</div>
+                    <div class="col-2">{{item.units}}</div>
+                    <div class="col-2 text-right">$ {{(item.units * item.unitprice) | number:'.2-2'}}</div>
+                </div>
+            </article>
+
+            <div class="divider d-flex align-items-center justify-content-end mb-4 pt-4 text-uppercase u-text-xl">
+                <div>Total</div>
+                <div class="ml-3">${{ order.total | number:'.2-2'}}</div>
+            </div>
+
+            <div class="esh-orders_new-buttons d-flex justify-content-end align-items-center">
+                <a class="btn btn-secondary" routerLink="/basket">Back to basket</a>
+
+                <button [disabled]="!newOrderForm.valid || isOrderProcessing" class="btn btn-primary ml-3">Place Order</button>
+            </div>
+        </section>
+    </form>
+</div>

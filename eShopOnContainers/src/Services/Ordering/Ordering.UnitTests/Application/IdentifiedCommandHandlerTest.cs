@@ -1,0 +1,82 @@
+﻿namespace UnitTest.Ordering.Application
+{
+    public class IdentifiedCommandHandlerTest
+    {
+        private readonly Mock<ILogger<IdentifiedCommandHandler<CreateOrderCommand, bool>>> _loggerMock;
+        private readonly Mock<IMediator> _mediator;
+        private readonly Mock<IRequestManager> _requestManager;
+
+        public IdentifiedCommandHandlerTest()
+        {
+            _requestManager = new Mock<IRequestManager>();
+            _mediator = new Mock<IMediator>();
+            _loggerMock = new Mock<ILogger<IdentifiedCommandHandler<CreateOrderCommand, bool>>>();
+        }
+
+        [Fact]
+        public async Task Handler_sends_command_when_order_no_exists()
+        {
+            // Arrange
+            var fakeGuid = Guid.NewGuid();
+            var fakeOrderCmd = new IdentifiedCommand<CreateOrderCommand, bool>(FakeOrderRequest(), fakeGuid);
+
+            _requestManager.Setup(x => x.ExistAsync(It.IsAny<Guid>()))
+                .Returns(Task.FromResult(false));
+
+            _mediator.Setup(x => x.Send(It.IsAny<IRequest<bool>>(), default))
+                .Returns(Task.FromResult(true));
+
+            //Act
+            var handler = new IdentifiedCommandHandler<CreateOrderCommand, bool>(_mediator.Object, _requestManager.Object,
+                _loggerMock.Object);
+            var cltToken = new CancellationToken();
+            bool result = await handler.Handle(fakeOrderCmd, cltToken);
+
+            //Assert
+            Assert.True(result);
+            _mediator.Verify(x => x.Send(It.IsAny<IRequest<bool>>(), default), Times.Once());
+        }
+
+        [Fact]
+        public async Task Handler_sends_no_command_when_order_already_exists()
+        {
+            // Arrange
+            var fakeGuid = Guid.NewGuid();
+            var fakeOrderCmd = new IdentifiedCommand<CreateOrderCommand, bool>(FakeOrderRequest(), fakeGuid);
+
+            _requestManager.Setup(x => x.ExistAsync(It.IsAny<Guid>()))
+                .Returns(Task.FromResult(true));
+
+            _mediator.Setup(x => x.Send(It.IsAny<IRequest<bool>>(), default))
+                .Returns(Task.FromResult(true));
+
+            //Act
+            var handler = new IdentifiedCommandHandler<CreateOrderCommand, bool>(_mediator.Object, _requestManager.Object,
+                _loggerMock.Object);
+            var cltToken = new CancellationToken();
+            bool result = await handler.Handle(fakeOrderCmd, cltToken);
+
+            //Assert
+            Assert.False(result);
+            _mediator.Verify(x => x.Send(It.IsAny<IRequest<bool>>(), default), Times.Never());
+        }
+
+        private CreateOrderCommand FakeOrderRequest(Dictionary<string, object> args = null)
+        {
+            return new CreateOrderCommand(
+                new List<BasketItem>(),
+                args != null && args.ContainsKey("userId") ? (string)args["userId"] : null,
+                args != null && args.ContainsKey("userName") ? (string)args["userName"] : null,
+                args != null && args.ContainsKey("city") ? (string)args["city"] : null,
+                args != null && args.ContainsKey("street") ? (string)args["street"] : null,
+                args != null && args.ContainsKey("state") ? (string)args["state"] : null,
+                args != null && args.ContainsKey("country") ? (string)args["country"] : null,
+                args != null && args.ContainsKey("zipcode") ? (string)args["zipcode"] : null,
+                args != null && args.ContainsKey("cardNumber") ? (string)args["cardNumber"] : "1234",
+                cardExpiration: args != null && args.ContainsKey("cardExpiration") ? (DateTime)args["cardExpiration"] : DateTime.MinValue,
+                cardSecurityNumber: args != null && args.ContainsKey("cardSecurityNumber") ? (string)args["cardSecurityNumber"] : "123",
+                cardHolderName: args != null && args.ContainsKey("cardHolderName") ? (string)args["cardHolderName"] : "XXX",
+                cardTypeId: args != null && args.ContainsKey("cardTypeId") ? (int)args["cardTypeId"] : 0);
+        }
+    }
+}

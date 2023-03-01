@@ -1,0 +1,34 @@
+﻿namespace Microsoft.eShopOnContainers.Mobile.Shopping.HttpAggregator.Services
+{
+    using System.Text;
+
+    public class OrderApiClient : IOrderApiClient
+    {
+        private readonly HttpClient _apiClient;
+        private readonly ILogger<OrderApiClient> _logger;
+        private readonly UrlsConfig _urls;
+
+        public OrderApiClient(HttpClient httpClient, ILogger<OrderApiClient> logger, IOptions<UrlsConfig> config)
+        {
+            _apiClient = httpClient;
+            _logger = logger;
+            _urls = config.Value;
+        }
+
+        public async Task<OrderData> GetOrderDraftFromBasketAsync(BasketData basket)
+        {
+            string uri = _urls.Orders + UrlsConfig.OrdersOperations.GetOrderDraft();
+            var content = new StringContent(JsonSerializer.Serialize(basket), Encoding.UTF8, "application/json");
+            var response = await _apiClient.PostAsync(uri, content);
+
+            response.EnsureSuccessStatusCode();
+
+            string ordersDraftResponse = await response.Content.ReadAsStringAsync();
+
+            return JsonSerializer.Deserialize<OrderData>(ordersDraftResponse, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+            });
+        }
+    }
+}
