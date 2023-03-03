@@ -1,5 +1,8 @@
 ﻿namespace Basket.FunctionalTests
 {
+    using API.Infrastructure.Repositories;
+    using API.Model;
+
     public class RedisBasketRepositoryTests
         : BasketScenarioBase
     {

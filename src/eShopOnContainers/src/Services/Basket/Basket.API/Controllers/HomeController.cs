@@ -1,4 +1,4 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Basket.API.Controllers
+﻿namespace Basket.API.Controllers
 {
     public class HomeController : Controller
     {

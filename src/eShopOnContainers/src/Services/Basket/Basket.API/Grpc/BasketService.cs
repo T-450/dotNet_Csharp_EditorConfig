@@ -1,5 +1,7 @@
-﻿namespace GrpcBasket
+﻿namespace Basket.API.Grpc
 {
+    using Basket = GrpcBasket.Basket;
+
     public class BasketService : Basket.BasketBase
     {
         private readonly ILogger<BasketService> _logger;

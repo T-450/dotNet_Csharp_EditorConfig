@@ -1,4 +1,4 @@
-namespace Microsoft.eShopOnContainers.Services.Basket.API
+namespace Basket.API
 {
     internal class TestHttpResponseTrailersFeature : IHttpResponseTrailersFeature
     {

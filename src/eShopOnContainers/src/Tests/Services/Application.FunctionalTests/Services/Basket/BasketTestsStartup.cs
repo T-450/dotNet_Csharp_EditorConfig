@@ -1,8 +1,8 @@
 ﻿namespace FunctionalTests.Services.Basket
 {
-    using Startup = Microsoft.eShopOnContainers.Services.Basket.API.Startup;
+    using Startup = global::Basket.API.Startup;
 
-    internal class BasketTestsStartup : Startup
+    internal class BasketTestsStartup : global::Basket.API.Startup
     {
         public BasketTestsStartup(IConfiguration env) : base(env) { }
 

@@ -1,4 +1,4 @@
-﻿namespace Basket.API.Infrastructure.Filters
+﻿namespace Basket.API.Infrastructure.Middlewares
 {
     public class AuthorizeCheckOperationFilter : IOperationFilter
     {

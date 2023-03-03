@@ -1,6 +1,7 @@
 ﻿namespace FunctionalTests.Services.Ordering
 {
-    using BasketItem = Microsoft.eShopOnContainers.Services.Basket.API.Model.BasketItem;
+    using global::Basket.API.Model;
+    using BasketItem = global::Basket.API.Model.BasketItem;
 
     public class OrderingScenarios : OrderingScenariosBase
     {

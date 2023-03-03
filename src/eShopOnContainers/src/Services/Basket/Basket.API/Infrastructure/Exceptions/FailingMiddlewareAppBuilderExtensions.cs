@@ -1,4 +1,4 @@
-﻿namespace Basket.API.Infrastructure.Middlewares
+﻿namespace Basket.API.Infrastructure.Exceptions
 {
     public static class FailingMiddlewareAppBuilderExtensions
     {

@@ -1,5 +1,10 @@
-namespace Microsoft.eShopOnContainers.Services.Basket.API
+namespace Basket.API
 {
+    using Controllers;
+    using Grpc;
+    using Infrastructure.Repositories;
+    using Services;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)

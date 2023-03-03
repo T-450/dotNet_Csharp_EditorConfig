@@ -1,6 +1,7 @@
 ﻿namespace FunctionalTests.Services
 {
-    using BasketItem = Microsoft.eShopOnContainers.Services.Basket.API.Model.BasketItem;
+    using global::Basket.API.Model;
+    using BasketItem = global::Basket.API.Model.BasketItem;
     using CatalogItem = Microsoft.eShopOnContainers.Services.Catalog.API.Model.CatalogItem;
 
     public class IntegrationEventsScenarios

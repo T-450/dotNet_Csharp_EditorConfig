@@ -1,4 +1,5 @@
-﻿using ILogger = Serilog.ILogger;
+﻿using Basket.API;
+using ILogger = Serilog.ILogger;
 
 var configuration = GetConfiguration();
 
@@ -6,17 +7,17 @@ Log.Logger = CreateSerilogLogger(configuration);
 
 try
 {
-    Log.Information("Configuring web host ({ApplicationContext})...", AppName);
+    Log.Information("Configuring web host ({ApplicationContext})...", Basket.API.Program.AppName);
     var host = BuildWebHost(configuration, args);
 
-    Log.Information("Starting web host ({ApplicationContext})...", AppName);
+    Log.Information("Starting web host ({ApplicationContext})...", Basket.API.Program.AppName);
     host.Run();
 
     return 0;
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "Program terminated unexpectedly ({ApplicationContext})!", AppName);
+    Log.Fatal(ex, "Program terminated unexpectedly ({ApplicationContext})!", Basket.API.Program.AppName);
     return 1;
 }
 finally
@@ -60,7 +61,7 @@ ILogger CreateSerilogLogger(IConfiguration configuration)
     string logstashUrl = configuration["Serilog:LogstashgUrl"];
     return new LoggerConfiguration()
         .MinimumLevel.Verbose()
-        .Enrich.WithProperty("ApplicationContext", AppName)
+        .Enrich.WithProperty("ApplicationContext", Basket.API.Program.AppName)
         .Enrich.FromLogContext()
         .WriteTo.Console()
         .WriteTo.Seq(string.IsNullOrWhiteSpace(seqServerUrl) ? "http://seq" : seqServerUrl)
@@ -97,8 +98,11 @@ IConfiguration GetConfiguration()
     return (port, grpcPort);
 }
 
-public abstract partial class Program
+namespace Basket.API
 {
-    public static string Namespace = typeof(Startup).Namespace;
-    public static string AppName = Namespace.Substring(Namespace.LastIndexOf('.', Namespace.LastIndexOf('.') - 1) + 1);
+    public abstract partial class Program
+    {
+        public static string Namespace = typeof(Startup).Namespace;
+        public static string AppName = Namespace.Substring(Namespace.LastIndexOf('.', Namespace.LastIndexOf('.') - 1) + 1);
+    }
 }

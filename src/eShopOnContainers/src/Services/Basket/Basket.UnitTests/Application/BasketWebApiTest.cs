@@ -1,7 +1,8 @@
 ﻿namespace UnitTest.Basket.Application
 {
     using System.Net;
-    using BasketItem = Microsoft.eShopOnContainers.Services.Basket.API.Model.BasketItem;
+    using global::Basket.API.Controllers;
+    using BasketItem = global::Basket.API.Model.BasketItem;
 
     public class BasketWebApiTest
     {

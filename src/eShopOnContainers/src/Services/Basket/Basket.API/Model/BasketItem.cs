@@ -1,4 +1,4 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Basket.API.Model
+﻿namespace Basket.API.Model
 {
     public class BasketItem : IValidatableObject
     {

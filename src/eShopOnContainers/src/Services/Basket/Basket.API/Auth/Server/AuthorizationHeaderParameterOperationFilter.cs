@@ -1,4 +1,4 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Basket.API.Auth.Server
+﻿namespace Basket.API.Auth.Server
 {
     public class AuthorizationHeaderParameterOperationFilter : IOperationFilter
     {

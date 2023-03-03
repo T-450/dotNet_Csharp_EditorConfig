@@ -1,4 +1,4 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Basket.API.Services
+﻿namespace Basket.API.Services
 {
     public class IdentityService : IIdentityService
     {

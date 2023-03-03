@@ -1,5 +1,7 @@
 ﻿namespace Basket.FunctionalTests.Base
 {
+    using API;
+
     internal class BasketTestsStartup : Startup
     {
         public BasketTestsStartup(IConfiguration env) : base(env) { }

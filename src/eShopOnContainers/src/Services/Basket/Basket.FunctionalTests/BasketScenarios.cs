@@ -1,5 +1,7 @@
 ﻿namespace Basket.FunctionalTests
 {
+    using API.Model;
+
     public class BasketScenarios
         : BasketScenarioBase
     {
