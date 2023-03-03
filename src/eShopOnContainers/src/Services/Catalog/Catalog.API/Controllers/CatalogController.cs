@@ -249,7 +249,7 @@
                 await _catalogContext.SaveChangesAsync();
             }
 
-            return CreatedAtAction(nameof(ItemByIdAsync), new { id = productToUpdate.Id }, null);
+            return CreatedAtAction(string.Empty, new { id = productToUpdate.Id }, null);
         }
 
         //POST api/v1/[controller]/items
@@ -272,7 +272,7 @@
 
             await _catalogContext.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(ItemByIdAsync), new { id = item.Id }, null);
+            return CreatedAtAction(string.Empty, new { id = item.Id }, null);
         }
 
         //DELETE api/v1/[controller]/id
